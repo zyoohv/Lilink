@@ -33,15 +33,15 @@ If you use smart phone, you can also import all your friends' phone number, qq n
 
 # Difficult
 
-1.  How to confirm information?
+*  How to confirm information?
 
 I suppose that maybe we can confirm usr's ID Card and real name.
 
-2.  How to let user like to update their new information?
+*  How to let user like to update their new information?
 
 If they want get the information of theirs friends, they will update themselves' information
 
-3.  Security problem.
+*  Security problem.
 
 Not sure.
 
@@ -58,5 +58,5 @@ Maybe.
 # What we Need now?
 
 1.  Web page
-
 2.  Manage user id, such as login or sign up.
+3.  Maybe we also have trouble in set up `Lamp`.
