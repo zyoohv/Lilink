@@ -2,30 +2,12 @@
 #define LOGIN_H
 
 #include <QDialog>
-#include <QVector>
+#include <QMessageBox>
+#include <QDebug>
 
 namespace Ui {
 class Login;
 }
-
-class Node
-{
-public:
-    QString name;
-    QString usrDescribe;
-    QString telephoneNumber;
-    QString qqNumber;
-    QString others;
-    Node() = default;
-    void setNodeValue(QString _name, QString _describe, QString _tel, QString _qq, QString _oth) {
-        name = _name;
-        usrDescribe = _describe;
-        telephoneNumber = _tel;
-        qqNumber = _qq;
-        others = _oth;
-    }
-       // name(_name), usrDescribe(_describe), telephoneNumber(_tel), qqNumber(_qq), others(_oth) {}
-};
 
 class Login : public QDialog
 {
@@ -33,25 +15,23 @@ class Login : public QDialog
 
 public:
 
-    friend class MainWindow;
-
     explicit Login(QWidget *parent = 0);
     ~Login();
 
 signals:
-    void acceptusr();
+    void receivedUsrPassWord(QString*, QString*);
 
 private slots:
     void on_buttonBox_accepted();
-    void checkUsr();
+
+    void on_rememberMe_toggled(bool checked);
+
+    void on_buttonBox_rejected();
 
 private:
     Ui::Login *ui;
 
-    QString *usr;
-    QString *pas;
-    bool loginState;
-    QVector<Node>usrInfo;
+    bool rememberPasswd;
 };
 
 #endif // LOGIN_H

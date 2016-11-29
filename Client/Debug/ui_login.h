@@ -33,7 +33,7 @@ public:
     QLineEdit *usrInput;
     QLabel *password;
     QLineEdit *pasInput;
-    QCheckBox *checkBox;
+    QCheckBox *rememberMe;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *Login)
@@ -52,6 +52,8 @@ public:
 
         usrInput = new QLineEdit(Login);
         usrInput->setObjectName(QStringLiteral("usrInput"));
+        usrInput->setMaxLength(15);
+        usrInput->setFrame(false);
 
         gridLayout->addWidget(usrInput, 0, 1, 1, 1);
 
@@ -62,13 +64,15 @@ public:
 
         pasInput = new QLineEdit(Login);
         pasInput->setObjectName(QStringLiteral("pasInput"));
+        pasInput->setMaxLength(15);
+        pasInput->setFrame(false);
 
         gridLayout->addWidget(pasInput, 1, 1, 1, 1);
 
-        checkBox = new QCheckBox(Login);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
+        rememberMe = new QCheckBox(Login);
+        rememberMe->setObjectName(QStringLiteral("rememberMe"));
 
-        gridLayout->addWidget(checkBox, 2, 0, 1, 2);
+        gridLayout->addWidget(rememberMe, 2, 0, 1, 2);
 
 
         verticalLayout->addLayout(gridLayout);
@@ -90,7 +94,7 @@ public:
         Login->setWindowTitle(QApplication::translate("Login", "Login", 0));
         username->setText(QApplication::translate("Login", "username:", 0));
         password->setText(QApplication::translate("Login", "password:", 0));
-        checkBox->setText(QApplication::translate("Login", "Remember me", 0));
+        rememberMe->setText(QApplication::translate("Login", "Remember Password", 0));
     } // retranslateUi
 
 };

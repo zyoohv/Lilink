@@ -60,7 +60,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(501, 304);
+        MainWindow->resize(594, 358);
         actionLog_in = new QAction(MainWindow);
         actionLog_in->setObjectName(QStringLiteral("actionLog_in"));
         actionLog_out = new QAction(MainWindow);
@@ -89,9 +89,13 @@ public:
         tableWidget->setObjectName(QStringLiteral("tableWidget"));
         tableWidget->setAutoFillBackground(false);
         tableWidget->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
         tableWidget->setShowGrid(false);
-        tableWidget->setGridStyle(Qt::NoPen);
+        tableWidget->setGridStyle(Qt::SolidLine);
+        tableWidget->setCornerButtonEnabled(true);
         tableWidget->horizontalHeader()->setCascadingSectionResizes(false);
+        tableWidget->verticalHeader()->setVisible(false);
 
         horizontalLayout->addWidget(tableWidget);
 
@@ -135,7 +139,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 501, 20));
+        menuBar->setGeometry(QRect(0, 0, 594, 20));
         menuLilink = new QMenu(menuBar);
         menuLilink->setObjectName(QStringLiteral("menuLilink"));
         menuEdit = new QMenu(menuBar);
@@ -170,7 +174,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Lilink", 0));
         actionLog_in->setText(QApplication::translate("MainWindow", "log in", 0));
         actionLog_out->setText(QApplication::translate("MainWindow", "log out", 0));
         actionAcount_info->setText(QApplication::translate("MainWindow", "acount info.", 0));

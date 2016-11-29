@@ -32,7 +32,4 @@ If you use smart phone, you can also import all your friends' phone number, qq n
 
 # What we Need now?
 
-1.  Web page
-2.  Manage user id, such as login or sign up.
-3.  Maybe we also have trouble in setting up `Lamp` environment.
-4.  More information reference `wiki` please.
+1.  More information reference `wiki` please.

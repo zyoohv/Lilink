@@ -6,53 +6,129 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //ui->tableWidget->viewport()->setFocusPolicy(Qt::NoFocus);
+    ui->tableWidget->setFocusPolicy(Qt::NoFocus);
 
-    lg = new Login(this);
+    loginDialog = new Login(this);
+    connect(loginDialog, SIGNAL(receivedUsrPassWord(QString*,QString*)),
+            this, SLOT(on_checkUsrnamePassword(QString*,QString*)));
+
+    usrInformationDialog = new UsrInfo(this);
+    changeMyInformationDialog = new ChangeMyInfo(this);
+
+    loginState = false;
+
+    db = new QSqlDatabase;
+    SetDatabase(db);
+    if (!db->open()) {
+        QMessageBox::warning(this, tr("Warning"), tr("NetWork Error!"));
+        this->close();
+    }
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete lg;
 }
 
-void MainWindow::initUsrInfo()
+void MainWindow::InitUsrInfo()
 {
     /*
-     * example.
-     * in fact we need get the information from service.
+     * get user's information from remote mysql
+     * store them to friendsinfors
+     * initilize according friendsinfos.
      */
-    Node now;
-    now.setNodeValue("zyoohv", "silly man", "18683629056", "1711577732", "I love you !");
-    lg->usrInfo.push_back(now);
 
+    friendsList = GetFriendsList(fundamentalId, db);
 
-    for (int i = 0; i < lg->usrInfo.size(); i++) {
-        ui->tableWidget->insertRow(i);
-        ui->tableWidget->setItem(0, 0, new QTableWidgetItem(lg->usrInfo[i].name));
-        ui->tableWidget->setItem(0, 1, new QTableWidgetItem(lg->usrInfo[i].usrDescribe));
+    ui->tableWidget->setColumnCount(2);
+    QStringList m_Header;
+    m_Header << QString("name") << QString("more information");
+    ui->tableWidget->setHorizontalHeaderLabels(m_Header);
+    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+    ui->tableWidget->setRowCount(friendsList->size() - 1);
+    for (int i = 1; i < friendsList->size(); i++) {
+        ui->tableWidget->setItem(i - 1, 0, new QTableWidgetItem(friendsList->at(i)->getName()));
+        ui->tableWidget->setItem(i - 1, 1, new QTableWidgetItem(friendsList->at(i)->getInformation()));
+    }
+
+    qDebug() << "initUsrInfo finished.";
+}
+
+void MainWindow::on_checkUsrnamePassword(QString* usrname, QString* password)
+{
+    if (CheckPasswd(usrname, password, fundamentalId, db)) {
+        loginState = true;
+        loginDialog->close();
+        InitUsrInfo();
     }
 }
 
 void MainWindow::on_actionLog_in_triggered()
 {
-    if(lg->loginState == true) {
+    /*
+     * Log in
+     */
+    if (loginState) {
+        QMessageBox::warning(this, tr("Warning"), tr("Log out first plsase!"));
         return ;
     }
-    lg->exec();
-    ui->tableWidget->setColumnCount(2);
-    QStringList m_Header;
-    m_Header << QString("name") << QString("info.");
-    ui->tableWidget->setHorizontalHeaderLabels(m_Header);
-    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
 
-    initUsrInfo();
+    loginDialog->exec();
 }
 
 void MainWindow::on_actionLog_out_triggered()
 {
-    ui->tableWidget->setColumnCount(0);
+    /*
+     * Log Out
+     */
+    if (!loginState) {
+        QMessageBox::warning(this, tr("Warning"), tr("Log in first plsase!"));
+        return ;
+    }
+
+    Clearlog();
+}
+
+void MainWindow::on_tableWidget_clicked(const QModelIndex &index)
+{
+    if (!index.isValid()) return ;
+    int indexValue = index.row();
+    /*
+     * show some information when be clicked
+     * on mainwindow.
+     * not sure how and what to show.
+     */
+}
+
+void MainWindow::on_tableWidget_doubleClicked(const QModelIndex &index)
+{
+    if (!index.isValid()) return ;
+    int indexValue = index.row();
+
+    /*
+     * show information detail
+     * and support break link.
+     */
+    usrInformationDialog->ShowInfo(friendsList->at(indexValue));
+    usrInformationDialog->exec();
+}
+
+void MainWindow::on_actionAcount_info_triggered()
+{
+    if (!loginState) {
+        QMessageBox::warning(this, tr("Warning"), tr("Log in first plsase!"));
+        return ;
+    }
+    changeMyInformationDialog->InitChangeMan(friendsList->at(0));
+    changeMyInformationDialog->exec();
+}
+
+void MainWindow::Clearlog()
+{
     ui->tableWidget->clear();
-    lg->loginState = false;
-    lg->usrInfo.clear();
+    ui->textBrowser->clear();
+
+    friendsList->clear();
+    loginState = false;
 }

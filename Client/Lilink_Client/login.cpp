@@ -6,13 +6,9 @@ Login::Login(QWidget *parent) :
     ui(new Ui::Login)
 {
     ui->setupUi(this);
-
     ui->pasInput->setEchoMode(QLineEdit::Password);
 
-    loginState = false;
-    usrInfo.clear();
-
-    connect(this, SIGNAL(acceptusr()), this, SLOT(close()));
+    rememberPasswd = false;
 }
 
 Login::~Login()
@@ -22,19 +18,19 @@ Login::~Login()
 
 void Login::on_buttonBox_accepted()
 {
-    usr = new QString(ui->usrInput->text());
-    pas = new QString(ui->pasInput->text());
-    ui->pasInput->clear();
-    checkUsr();
+    emit receivedUsrPassWord(new QString(ui->usrInput->text()), new QString(ui->pasInput->text()));
+
+    if (!rememberPasswd) {
+        ui->pasInput->clear();
+    }
 }
 
-void Login::checkUsr()
+void Login::on_rememberMe_toggled(bool checked)
 {
-    /*
-     * example: usr=zyoohv, pas=zyoohv123
-     */
-    if (*usr == QString("zyoohv") && *pas == QString("zyoohv123")) {
-        loginState = true;
-        emit acceptusr();
-    }
+    rememberPasswd = checked;
+}
+
+void Login::on_buttonBox_rejected()
+{
+    this->close();
 }

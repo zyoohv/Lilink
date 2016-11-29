@@ -2,7 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
+#include <QDebug>
 #include "login.h"
+#include "usrinfo.h"
+#include "changemyinfo.h"
+#include "database.h"
 
 namespace Ui {
 class MainWindow;
@@ -14,22 +19,45 @@ class MainWindow : public QMainWindow
 
 public:
 
-    friend class Login;
-
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
     void on_actionLog_in_triggered();
+
     void on_actionLog_out_triggered();
+
+    void on_tableWidget_clicked(const QModelIndex &index);
+
+    void on_tableWidget_doubleClicked(const QModelIndex &index);
+
+    void on_actionAcount_info_triggered();
+
+    void on_checkUsrnamePassword(QString*, QString*);
 
 private:
 
-    void initUsrInfo();
+    void InitUsrInfo();
+
+    void Clearlog();
 
     Ui::MainWindow *ui;
 
-    Login *lg;
+    Login *loginDialog;
+    UsrInfo *usrInformationDialog;
+    ChangeMyInfo *changeMyInformationDialog;
+
+    /*  friendsinfo information:
+     *  at index 0, it's user's information
+     *  so the friends' information begin with the index of the 1
+     */
+    QList<ManInfo*> *friendsList;
+
+    QString *usrName;
+    QString *passWord;
+    int fundamentalId;
+    bool loginState;
+    QSqlDatabase *db;
 };
 
 #endif // MAINWINDOW_H
