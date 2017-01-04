@@ -8,8 +8,6 @@
 
 *   Register
 
-It's link to web.
-
 *   My profile
 
 Uesr also can edit their profile through it.
@@ -32,7 +30,7 @@ Export as `pdf`, `vcf`, `doc`
 
 *   Find
 
-Find someone from their lilink.
+Finding someone from their lilink.
 
 ## Not Sure Function
 
@@ -42,4 +40,4 @@ May there are still some more usefull ways to do it other than `qq style`?
 
 *   Remove
 
-It must accord with the method of 'add new friend'
+It's must according with the method of 'add new friend'
