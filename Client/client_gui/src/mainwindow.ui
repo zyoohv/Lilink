@@ -68,9 +68,9 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="buttonSync">
+         <widget class="QPushButton" name="buttonRefresh">
           <property name="text">
-           <string>Sync</string>
+           <string>Refresh</string>
           </property>
          </widget>
         </item>
@@ -93,7 +93,7 @@
      <x>0</x>
      <y>0</y>
      <width>594</width>
-     <height>20</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuLilink">

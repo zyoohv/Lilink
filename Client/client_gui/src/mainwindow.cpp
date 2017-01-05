@@ -14,16 +14,12 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(on_checkUsrnamePassword(QString*,QString*)));
 
     usrInformationDialog = new UsrInfo(this);
+    connect(usrInformationDialog, SIGNAL(breakFrindsLink(ManInfo*)),
+            this, SLOT(on_deleteFriendLink(ManInfo*)));
+
     changeMyInformationDialog = new ChangeMyInfo(this);
 
     loginState = false;
-
-    db = new QSqlDatabase;
-    SetDatabase(db);
-    if (!db->open()) {
-        QMessageBox::warning(this, tr("Warning"), tr("NetWork Error!"));
-        this->close();
-    }
 }
 
 MainWindow::~MainWindow()
@@ -39,7 +35,7 @@ void MainWindow::InitUsrInfo()
      * initilize according friendsinfos.
      */
 
-    friendsList = GetFriendsList(fundamentalId, db);
+    friendsList = GetFriendsList(fundamentalId);
 
     ui->tableWidget->setColumnCount(2);
     QStringList m_Header;
@@ -57,30 +53,31 @@ void MainWindow::InitUsrInfo()
 
 void MainWindow::on_checkUsrnamePassword(QString* usrname, QString* password)
 {
-    if (CheckPasswd(usrname, password, fundamentalId, db)) {
+    if (CheckPasswd(usrname, password, fundamentalId)) {
+        qDebug() << "Checking Password Success!";
         loginState = true;
         loginDialog->close();
         InitUsrInfo();
+    }
+    else {
+        QMessageBox::warning(this, tr("Warning"), tr("Password Error!"));
     }
 }
 
 void MainWindow::on_actionLog_in_triggered()
 {
-    /*
-     * Log in
+    /* Log in
      */
     if (loginState) {
         QMessageBox::warning(this, tr("Warning"), tr("Log out first plsase!"));
         return ;
     }
-
     loginDialog->exec();
 }
 
 void MainWindow::on_actionLog_out_triggered()
 {
-    /*
-     * Log Out
+    /* Log Out
      */
     if (!loginState) {
         QMessageBox::warning(this, tr("Warning"), tr("Log in first plsase!"));
@@ -122,6 +119,11 @@ void MainWindow::on_actionAcount_info_triggered()
     }
     changeMyInformationDialog->InitChangeMan(friendsList->at(0));
     changeMyInformationDialog->exec();
+}
+
+void MainWindow::on_deleteFriendLink(ManInfo *thisMan)
+{
+    DeleteFriendLink(friendsList->at(0)->getFundamentalId(), thisMan->getFundamentalId());
 }
 
 void MainWindow::Clearlog()

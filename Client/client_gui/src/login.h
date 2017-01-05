@@ -1,9 +1,7 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include <QDialog>
-#include <QMessageBox>
-#include <QDebug>
+#include "lilink.h"
 
 namespace Ui {
 class Login;

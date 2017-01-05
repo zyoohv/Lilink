@@ -6,8 +6,6 @@ UsrInfo::UsrInfo(QWidget *parent) :
     ui(new Ui::UsrInfo)
 {
     ui->setupUi(this);
-
-    isBreak = false;
 }
 
 UsrInfo::~UsrInfo()
@@ -15,8 +13,9 @@ UsrInfo::~UsrInfo()
     delete ui;
 }
 
-void UsrInfo::ShowInfo(ManInfo *thisMan)
+void UsrInfo::ShowInfo(ManInfo *showMan)
 {
+    thisMan = showMan;
     ui->Title->setText(QString("%1").arg(thisMan->getUsrId()));
 
     ui->showUsrInfo->clear();
@@ -27,8 +26,8 @@ void UsrInfo::ShowInfo(ManInfo *thisMan)
 
 void UsrInfo::on_BreakLink_clicked()
 {
-    QMessageBox::StandardButton rb = QMessageBox::question(this, tr("warning"), tr("Are your sure to delete the friend?"), QMessageBox::Yes|QMessageBox::No);
-    if (rb == QMessageBox::Yes) {
-        isBreak = true;
+    QMessageBox::StandardButton makeSure = QMessageBox::question(this, tr("warning"), tr("Are your sure to delete the friend?"), QMessageBox::Yes|QMessageBox::No);
+    if (makeSure == QMessageBox::Yes) {
+        emit breakFrindsLink(thisMan);
     }
 }

@@ -1,20 +1,18 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QMessageBox>
-#include <QDebug>
-#include <QCoreApplication>
+#include "lilink.h"
 #include "maninfo.h"
 
-void SetDatabase(QSqlDatabase *db);
+const QString addr = QString("119.29.150.242");
+const int port = 50005;
 
-bool CheckPasswd(QString* usrName, QString* passWord, int &fundamentalId, QSqlDatabase* db);
+bool CheckPasswd(QString* usrName, QString* passWord, int &fundamentalId);
 
-QList<ManInfo*>* GetFriendsList(int fundamentalId, QSqlDatabase* db);
+QList<ManInfo*>* GetFriendsList(int fundamentalId);
 
-ManInfo* GetUsrInfo(int fundamentalId, QSqlDatabase* db);
+ManInfo* GetUsrInfo(int fundamentalId);
 
+void DeleteFriendLink(int fundamentalId1, int fundamentalId2);
 
 #endif // DATABASE_H

@@ -1,7 +1,7 @@
 #ifndef MANINFO_H
 #define MANINFO_H
 
-#include <QString>
+#include "lilink.h"
 
 class ManInfo
 {

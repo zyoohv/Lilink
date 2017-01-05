@@ -2,8 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QMessageBox>
-#include <QDebug>
+#include "lilink.h"
 #include "login.h"
 #include "usrinfo.h"
 #include "changemyinfo.h"
@@ -35,6 +34,8 @@ private slots:
 
     void on_checkUsrnamePassword(QString*, QString*);
 
+    void on_deleteFriendLink(ManInfo*);
+
 private:
 
     void InitUsrInfo();
@@ -57,7 +58,6 @@ private:
     QString *passWord;
     int fundamentalId;
     bool loginState;
-    QSqlDatabase *db;
 };
 
 #endif // MAINWINDOW_H

@@ -15,7 +15,7 @@
 #ifndef CHANGEMYINFO_H
 #define CHANGEMYINFO_H
 
-#include <QDialog>
+#include "lilink.h"
 #include "maninfo.h"
 
 namespace Ui {
@@ -28,15 +28,13 @@ class ChangeMyInfo : public QDialog
 
 public:
 
-    friend class MainWindow;
-
     explicit ChangeMyInfo(QWidget *parent = 0);
     ~ChangeMyInfo();
 
+    void InitChangeMan(ManInfo *changeMan);
+
 private:
     Ui::ChangeMyInfo *ui;
-
-    void InitChangeMan(ManInfo *changeMan);
 
     ManInfo* thisMan;
 };

@@ -33,13 +33,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QLabel" name="State">
-       <property name="text">
-        <string>State: link</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
   </layout>

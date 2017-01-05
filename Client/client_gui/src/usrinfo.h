@@ -15,8 +15,7 @@
 #ifndef USRINFO_H
 #define USRINFO_H
 
-#include <QDialog>
-#include <QMessageBox>
+#include "lilink.h"
 #include "maninfo.h"
 
 namespace Ui {
@@ -29,10 +28,14 @@ class UsrInfo : public QDialog
 
 public:
 
-    friend class MainWindow;
-
     explicit UsrInfo(QWidget *parent = 0);
     ~UsrInfo();
+
+    void ShowInfo(ManInfo *showMan);
+
+signals:
+
+    breakFrindsLink(ManInfo *thisMan);
 
 private slots:
     void on_BreakLink_clicked();
@@ -40,9 +43,7 @@ private slots:
 private:
     Ui::UsrInfo *ui;
 
-    void ShowInfo(ManInfo *thisMan);
-
-    bool isBreak;
+    ManInfo *thisMan;
 };
 
 #endif // USRINFO_H
