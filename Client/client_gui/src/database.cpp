@@ -58,6 +58,7 @@ QString GetMsg(QByteArray command)
     }
 
     client->close();
+    qDebug() << "Searching Result: " << QVariant(recvb).toString();
     return QVariant(recvb).toString();
 }
 
@@ -217,7 +218,18 @@ void DeleteFriendLink(int fundamentalId1, int fundamentalId2)
      */
     QByteArray command;
     command.clear();
-    command.append(QString(""));
-    command.append(QString(" "));
-    command.append(QString("';"));
+    command.append(QString("delete from usr_frineds where FundamentalId1="));
+    command.append(QString::number(fundamentalId1, 10));
+    command.append(QString(" and ") + QString("FundamentalId2="));
+    command.append(QString::number(fundamentalId2, 10) + QString(";"));
+
+    SendMsg(command);
+
+    command.clear();
+    command.append(QString("delete from usr_frineds where FundamentalId2="));
+    command.append(QString::number(fundamentalId1, 10));
+    command.append(QString(" and ") + QString("FundamentalId1="));
+    command.append(QString::number(fundamentalId2, 10) + QString(";"));
+
+    SendMsg(command);
 }
