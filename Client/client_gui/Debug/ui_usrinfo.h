@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -27,7 +28,9 @@ class Ui_UsrInfo
 {
 public:
     QVBoxLayout *verticalLayout;
-    QLabel *Title;
+    QLabel *Usrinfo;
+    QLabel *Information;
+    QFrame *line;
     QTextBrowser *showUsrInfo;
     QHBoxLayout *horizontalLayout;
     QPushButton *BreakLink;
@@ -39,10 +42,22 @@ public:
         UsrInfo->resize(240, 320);
         verticalLayout = new QVBoxLayout(UsrInfo);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        Title = new QLabel(UsrInfo);
-        Title->setObjectName(QStringLiteral("Title"));
+        Usrinfo = new QLabel(UsrInfo);
+        Usrinfo->setObjectName(QStringLiteral("Usrinfo"));
 
-        verticalLayout->addWidget(Title);
+        verticalLayout->addWidget(Usrinfo);
+
+        Information = new QLabel(UsrInfo);
+        Information->setObjectName(QStringLiteral("Information"));
+
+        verticalLayout->addWidget(Information);
+
+        line = new QFrame(UsrInfo);
+        line->setObjectName(QStringLiteral("line"));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line);
 
         showUsrInfo = new QTextBrowser(UsrInfo);
         showUsrInfo->setObjectName(QStringLiteral("showUsrInfo"));
@@ -68,7 +83,8 @@ public:
     void retranslateUi(QDialog *UsrInfo)
     {
         UsrInfo->setWindowTitle(QApplication::translate("UsrInfo", "usr information", Q_NULLPTR));
-        Title->setText(QApplication::translate("UsrInfo", "Usrinfo.", Q_NULLPTR));
+        Usrinfo->setText(QApplication::translate("UsrInfo", "Usrinfo.", Q_NULLPTR));
+        Information->setText(QApplication::translate("UsrInfo", "Information", Q_NULLPTR));
         BreakLink->setText(QApplication::translate("UsrInfo", "BreakLink", Q_NULLPTR));
     } // retranslateUi
 

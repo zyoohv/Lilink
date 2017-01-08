@@ -7,6 +7,7 @@
 #include "usrinfo.h"
 #include "changemyinfo.h"
 #include "database.h"
+#include "addnewfriend.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,8 +27,6 @@ private slots:
 
     void on_actionLog_out_triggered();
 
-    void on_tableWidget_clicked(const QModelIndex &index);
-
     void on_tableWidget_doubleClicked(const QModelIndex &index);
 
     void on_actionAcount_info_triggered();
@@ -35,6 +34,10 @@ private slots:
     void on_checkUsrnamePassword(QString*, QString*);
 
     void on_deleteFriendLink(ManInfo*);
+
+    void on_buttonRefresh_clicked();
+
+    void on_buttonAdd_clicked();
 
 private:
 
@@ -47,6 +50,7 @@ private:
     Login *loginDialog;
     UsrInfo *usrInformationDialog;
     ChangeMyInfo *changeMyInformationDialog;
+    AddNewFriend *addNewFriendDialog;
 
     /*  friendsinfo information:
      *  at index 0, it's user's information

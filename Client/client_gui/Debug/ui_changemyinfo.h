@@ -21,7 +21,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
@@ -29,19 +29,18 @@ QT_BEGIN_NAMESPACE
 class Ui_ChangeMyInfo
 {
 public:
-    QVBoxLayout *verticalLayout_2;
-    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
     QLabel *usrId;
     QPushButton *pushButton;
+    QGridLayout *gridLayout;
     QLabel *name;
     QLineEdit *nameLineEdit;
     QLabel *information;
     QLineEdit *infoLineEdit;
-    QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QLabel *InfoContent;
     QSpacerItem *horizontalSpacer;
-    QTextBrowser *textBrowser;
+    QTextEdit *textEdit;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *saveButton;
     QPushButton *cancelButton;
@@ -50,46 +49,44 @@ public:
     {
         if (ChangeMyInfo->objectName().isEmpty())
             ChangeMyInfo->setObjectName(QStringLiteral("ChangeMyInfo"));
-        ChangeMyInfo->resize(240, 320);
-        verticalLayout_2 = new QVBoxLayout(ChangeMyInfo);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        gridLayout = new QGridLayout();
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        ChangeMyInfo->resize(246, 320);
+        verticalLayout = new QVBoxLayout(ChangeMyInfo);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         usrId = new QLabel(ChangeMyInfo);
         usrId->setObjectName(QStringLiteral("usrId"));
 
-        gridLayout->addWidget(usrId, 0, 0, 1, 1);
+        verticalLayout->addWidget(usrId);
 
         pushButton = new QPushButton(ChangeMyInfo);
         pushButton->setObjectName(QStringLiteral("pushButton"));
 
-        gridLayout->addWidget(pushButton, 0, 1, 1, 1);
+        verticalLayout->addWidget(pushButton);
 
+        gridLayout = new QGridLayout();
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         name = new QLabel(ChangeMyInfo);
         name->setObjectName(QStringLiteral("name"));
 
-        gridLayout->addWidget(name, 1, 0, 1, 1);
+        gridLayout->addWidget(name, 0, 0, 1, 1);
 
         nameLineEdit = new QLineEdit(ChangeMyInfo);
         nameLineEdit->setObjectName(QStringLiteral("nameLineEdit"));
 
-        gridLayout->addWidget(nameLineEdit, 1, 1, 1, 1);
+        gridLayout->addWidget(nameLineEdit, 0, 1, 1, 1);
 
         information = new QLabel(ChangeMyInfo);
         information->setObjectName(QStringLiteral("information"));
 
-        gridLayout->addWidget(information, 2, 0, 1, 1);
+        gridLayout->addWidget(information, 1, 0, 1, 1);
 
         infoLineEdit = new QLineEdit(ChangeMyInfo);
         infoLineEdit->setObjectName(QStringLiteral("infoLineEdit"));
 
-        gridLayout->addWidget(infoLineEdit, 2, 1, 1, 1);
+        gridLayout->addWidget(infoLineEdit, 1, 1, 1, 1);
 
 
-        verticalLayout_2->addLayout(gridLayout);
+        verticalLayout->addLayout(gridLayout);
 
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         InfoContent = new QLabel(ChangeMyInfo);
@@ -104,13 +101,10 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
-        textBrowser = new QTextBrowser(ChangeMyInfo);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+        textEdit = new QTextEdit(ChangeMyInfo);
+        textEdit->setObjectName(QStringLiteral("textEdit"));
 
-        verticalLayout->addWidget(textBrowser);
-
-
-        verticalLayout_2->addLayout(verticalLayout);
+        verticalLayout->addWidget(textEdit);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
@@ -125,7 +119,7 @@ public:
         horizontalLayout_2->addWidget(cancelButton);
 
 
-        verticalLayout_2->addLayout(horizontalLayout_2);
+        verticalLayout->addLayout(horizontalLayout_2);
 
 
         retranslateUi(ChangeMyInfo);
@@ -136,7 +130,7 @@ public:
     void retranslateUi(QDialog *ChangeMyInfo)
     {
         ChangeMyInfo->setWindowTitle(QApplication::translate("ChangeMyInfo", "Change information", Q_NULLPTR));
-        usrId->setText(QApplication::translate("ChangeMyInfo", "usrId", Q_NULLPTR));
+        usrId->setText(QApplication::translate("ChangeMyInfo", "{b8ee6141-914f-4b48-91a1-f709748860b5}", Q_NULLPTR));
         pushButton->setText(QApplication::translate("ChangeMyInfo", "Apply Change Id", Q_NULLPTR));
         name->setText(QApplication::translate("ChangeMyInfo", "Name", Q_NULLPTR));
         information->setText(QApplication::translate("ChangeMyInfo", "Information", Q_NULLPTR));

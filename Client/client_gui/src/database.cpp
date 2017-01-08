@@ -49,7 +49,7 @@ QString GetMsg(QByteArray command)
      * timeout default : 30000 ms
      */
     QByteArray recvb;
-    if (client->waitForReadyRead()) {
+    if (client->waitForReadyRead(5000)) {
         recvb = client->readAll();
     }
     else {
@@ -62,12 +62,7 @@ QString GetMsg(QByteArray command)
     return QVariant(recvb).toString();
 }
 
-/*  This function checks the exist of the usrname
- *  and check if the password is right.
- *  If the password and usrname are right, we also get
- *  the fundamentalId of the usr.
- *  notice that the fundamentalId can't be seen and change by usr.
- */
+
 bool CheckPasswd(QString* usrName, QString* passWord, int &fundamentalId)
 {
     /* combine the searching command
@@ -75,9 +70,8 @@ bool CheckPasswd(QString* usrName, QString* passWord, int &fundamentalId)
      */
     QByteArray command;
     command.clear();
-    command.append(QString("select * from usr_passwd where UsrName='"));
-    command.append(*usrName);
-    command.append(QString("';"));
+    command.append(QString("select * from usr_passwd where UsrName=\"") +
+                   (*usrName) + QString("\";"));
 
     QString recv = GetMsg(command);
 
@@ -104,10 +98,7 @@ bool CheckPasswd(QString* usrName, QString* passWord, int &fundamentalId)
     return false;
 }
 
-/* This function gets the all information of the usr
- * which owning the fundamentalId it given.
- * What's more, it apend the information to the friendslist
- */
+
 ManInfo* GetUsrInfo(int fundamentalId)
 {
     /* combine the searching command
@@ -115,18 +106,17 @@ ManInfo* GetUsrInfo(int fundamentalId)
      */
     QByteArray command;
     command.clear();
-    command.append(QString("select * from usr_information where FundamentalId="));
-    command.append(QString::number(fundamentalId, 10));
-    command.append(QString(";"));
+    command.append(QString("select * from usr_information where FundamentalId=") +
+                   QString::number(fundamentalId, 10) + QString(";"));
 
     QString recv = GetMsg(command);
 
     /* get the information of 'fundamentalId'
      * it's a little complex and not sure how to improve it.
      * format: "((2147483646L, 'Bear', 'A Silly Bear',
-     *     'I\\'m Bear <br><a href=\"https://www.baidu.com\">click</a>', 2147483646L),)"
+     *     'I\'m Bear <br><a href=\"https://www.baidu.com\">click</a>', 2147483646L),)"
      */
-    int usrId;
+    QString usrId;
     QString name;
     QString information;
     QString infoContent;
@@ -136,10 +126,10 @@ ManInfo* GetUsrInfo(int fundamentalId)
     if (error.error == QJsonParseError::NoError) {
         if (jsonDocument.isObject()) {
             QVariantMap result = jsonDocument.toVariant().toMap();
-            usrId = result[QString("4")].toInt();
-            name = result[QString("1")].toString();
-            information = result[QString("2")].toString();
-            infoContent = result[QString("3")].toString();
+            usrId = result[usrIdId].toString();
+            name = result[nameId].toString();
+            information = result[informationId].toString();
+            infoContent = result[infoContentId].toString();
         }
     }
 
@@ -207,10 +197,7 @@ QList<ManInfo*>* GetFriendsList(int fundamentalId)
     return friendsList;
 }
 
-/* This function sends the informations of fundamentalId
- * who wants to break the linking
- * Notice that we don't provide the 'link' function
- */
+
 void DeleteFriendLink(int fundamentalId1, int fundamentalId2)
 {
     /* combine the searching command
@@ -218,18 +205,102 @@ void DeleteFriendLink(int fundamentalId1, int fundamentalId2)
      */
     QByteArray command;
     command.clear();
-    command.append(QString("delete from usr_frineds where FundamentalId1="));
-    command.append(QString::number(fundamentalId1, 10));
-    command.append(QString(" and ") + QString("FundamentalId2="));
-    command.append(QString::number(fundamentalId2, 10) + QString(";"));
+    command.append(QString("delete from usr_friends where FundamentalId1=") +
+                   QString::number(fundamentalId1, 10) + QString(" and ") +
+                   QString("FundamentalId2=") + QString::number(fundamentalId2, 10) + QString(";"));
 
     SendMsg(command);
 
     command.clear();
-    command.append(QString("delete from usr_frineds where FundamentalId2="));
-    command.append(QString::number(fundamentalId1, 10));
-    command.append(QString(" and ") + QString("FundamentalId1="));
-    command.append(QString::number(fundamentalId2, 10) + QString(";"));
+    command.append(QString("delete from usr_friends where FundamentalId1=") +
+                   QString::number(fundamentalId2, 10) + QString(" and ") +
+                   QString("FundamentalId2=") + QString::number(fundamentalId1, 10) + QString(";"));
 
     SendMsg(command);
+}
+
+void ApplyUsrInfo(ManInfo *thisMan)
+{
+    QByteArray command;
+    command.clear();
+    command.append(QString("update usr_information set Name=\"") + thisMan->getName().replace("\"", "\\\"") +
+                   QString("\",Information=\"") + thisMan->getInformation().replace("\"", "\\\"") +
+                   QString("\",InfoContent=\"") + thisMan->getInfoContent().replace("\"", "\\\"") +
+                   QString("\",UsrId=\"") + thisMan->getUsrId() +
+                   QString("\" where FundamentalId=") + QString::number(thisMan->getFundamentalId(), 10) + QString(";"));
+
+    SendMsg(command);
+}
+
+bool AppendNewFriend(QList<ManInfo *> *friendsList, QString usrId)
+{
+    QByteArray command;
+    command.clear();
+    command.append(QString("select * from usr_information where UsrId=\"") +
+                   usrId + QString("\";"));
+
+    QString recv = GetMsg(command);
+
+    qDebug() << usrId << ":\"" << recv << "\"";
+
+    if (recv.length() < 10) {
+        qDebug() << "usr not existed!";
+        return false;
+    }
+
+    /* get the information of 'fundamentalId'
+     * it's a little complex and not sure how to improve it.
+     * format: "((2147483646L, 'Bear', 'A Silly Bear',
+     *     'I\'m Bear <br><a href=\"https://www.baidu.com\">click</a>', 2147483646L),)"
+     */
+    int fundamentalId;
+    QString name;
+    QString information;
+    QString infoContent;
+
+    QJsonParseError error;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(recv.toUtf8(), &error);
+    if (error.error == QJsonParseError::NoError) {
+        if (jsonDocument.isObject()) {
+            QVariantMap result = jsonDocument.toVariant().toMap();
+            fundamentalId = result[fundamentalIdId].toInt();
+            name = result[nameId].toString();
+            information = result[informationId].toString();
+            infoContent = result[infoContentId].toString();
+        }
+    }
+
+    command.clear();
+
+    QByteArray insertCommand;
+    insertCommand.clear();
+    if (friendsList->at(0)->getFundamentalId() < fundamentalId) {
+        command.append(QString("select * from usr_friends where FundamentalId1=") +
+                       QString::number(friendsList->at(0)->getFundamentalId(), 10) +
+                       QString(" and FundamentalId2=") + QString::number(fundamentalId, 10) + QString(";"));
+        insertCommand.append(QString("insert into usr_friends (FundamentalId1, FundamentalId2) values (") +
+                             QString::number(friendsList->at(0)->getFundamentalId(), 10) + QString(", ") +
+                             QString::number(fundamentalId, 10) + QString(");"));
+    }
+    else if (friendsList->at(0)->getFundamentalId() > fundamentalId) {
+        command.append(QString("select * from usr_friends where FundamentalId1=") +
+                       QString::number(fundamentalId, 10) + QString(" and FundamentalId2=") +
+                       QString::number(friendsList->at(0)->getFundamentalId(), 10) + QString(";"));
+        insertCommand.append(QString("insert into usr_friends (FundamentalId1, FundamentalId2) values (") +
+                             QString::number(fundamentalId, 10) + QString(", ") +
+                             QString::number(friendsList->at(0)->getFundamentalId(), 10) + QString(");"));
+    }
+    else return false;
+
+    recv = GetMsg(command);
+    if (recv.length() > 10) {
+        qDebug() << "has been your friend!";
+        return false;
+    }
+
+    SendMsg(insertCommand);
+
+    friendsList->append(new ManInfo(fundamentalId, usrId, name, information, infoContent));
+
+    return true;
 }

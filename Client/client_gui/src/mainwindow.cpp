@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setFocusPolicy(Qt::NoFocus);
 
     loginDialog = new Login(this);
+    loginState = false;
     connect(loginDialog, SIGNAL(receivedUsrPassWord(QString*,QString*)),
             this, SLOT(on_checkUsrnamePassword(QString*,QString*)));
 
@@ -19,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     changeMyInformationDialog = new ChangeMyInfo(this);
 
-    loginState = false;
+    addNewFriendDialog = new AddNewFriend(this);
 }
 
 MainWindow::~MainWindow()
@@ -34,7 +35,7 @@ void MainWindow::InitUsrInfo()
      * store them to friendsinfors
      * initilize according friendsinfos.
      */
-
+    friendsList->clear();
     friendsList = GetFriendsList(fundamentalId);
 
     ui->tableWidget->setColumnCount(2);
@@ -87,21 +88,10 @@ void MainWindow::on_actionLog_out_triggered()
     Clearlog();
 }
 
-void MainWindow::on_tableWidget_clicked(const QModelIndex &index)
-{
-    if (!index.isValid()) return ;
-    int indexValue = index.row();
-    /*
-     * show some information when be clicked
-     * on mainwindow.
-     * not sure how and what to show.
-     */
-}
-
 void MainWindow::on_tableWidget_doubleClicked(const QModelIndex &index)
 {
     if (!index.isValid()) return ;
-    int indexValue = index.row();
+    int indexValue = index.row() + 1;
 
     /*
      * show information detail
@@ -124,13 +114,28 @@ void MainWindow::on_actionAcount_info_triggered()
 void MainWindow::on_deleteFriendLink(ManInfo *thisMan)
 {
     DeleteFriendLink(friendsList->at(0)->getFundamentalId(), thisMan->getFundamentalId());
+    InitUsrInfo();
 }
 
 void MainWindow::Clearlog()
 {
     ui->tableWidget->clear();
-    ui->textBrowser->clear();
 
     friendsList->clear();
     loginState = false;
+}
+
+void MainWindow::on_buttonRefresh_clicked()
+{
+    if (!loginState) return ;
+    InitUsrInfo();
+    QMessageBox::warning(this, tr("Warning"), tr("Refresh Successful!"));
+}
+
+void MainWindow::on_buttonAdd_clicked()
+{
+    if (!loginState) return ;
+    addNewFriendDialog->initDialogInformation(friendsList);
+    addNewFriendDialog->exec();
+    InitUsrInfo();
 }

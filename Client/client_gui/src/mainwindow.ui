@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>594</width>
+    <width>251</width>
     <height>358</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>Lilink</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QTableWidget" name="tableWidget">
       <property name="autoFillBackground">
@@ -47,41 +47,20 @@
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QTextBrowser" name="textBrowser"/>
+       <widget class="QPushButton" name="buttonAdd">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QPushButton" name="buttonAdd">
-          <property name="text">
-           <string>Add</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="buttonRemove">
-          <property name="text">
-           <string>Remove</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="buttonRefresh">
-          <property name="text">
-           <string>Refresh</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="buttonExportvcf">
-          <property name="text">
-           <string>export(vcf)</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QPushButton" name="buttonRefresh">
+        <property name="text">
+         <string>Refresh</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -92,7 +71,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>594</width>
+     <width>251</width>
      <height>23</height>
     </rect>
    </property>
@@ -104,37 +83,7 @@
     <addaction name="actionLog_out"/>
     <addaction name="actionAcount_info"/>
    </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-    <widget class="QMenu" name="menuExport_as">
-     <property name="title">
-      <string>Export as</string>
-     </property>
-     <addaction name="actionVcf"/>
-     <addaction name="actionDoc"/>
-     <addaction name="actionPdf"/>
-    </widget>
-    <addaction name="menuExport_as"/>
-   </widget>
-   <widget class="QMenu" name="menuFind">
-    <property name="title">
-     <string>Find</string>
-    </property>
-    <widget class="QMenu" name="menuFind_by">
-     <property name="title">
-      <string>Search by ...</string>
-     </property>
-     <addaction name="actionName"/>
-     <addaction name="actionTelephone"/>
-     <addaction name="actionQq"/>
-    </widget>
-    <addaction name="menuFind_by"/>
-   </widget>
    <addaction name="menuLilink"/>
-   <addaction name="menuFind"/>
-   <addaction name="menuEdit"/>
   </widget>
   <action name="actionLog_in">
    <property name="text">

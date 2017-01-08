@@ -6,9 +6,10 @@ INPUT(
 ./release\changemyinfo.o
 ./release\database.o
 ./release\maninfo.o
-./release\qrc_resource.o
+./release\addnewfriend.o
 ./release\moc_mainwindow.o
 ./release\moc_login.o
 ./release\moc_usrinfo.o
 ./release\moc_changemyinfo.o
+./release\moc_addnewfriend.o
 );

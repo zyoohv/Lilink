@@ -7,14 +7,13 @@ class ManInfo
 {
 public:
 
-    ManInfo(int, int, QString, QString, QString);
+    ManInfo(int, QString, QString, QString, QString);
     ~ManInfo();
 
     int getFundamentalId() const;
-    void setFundamentalId(int value);
 
-    int getUsrId() const;
-    void setUsrId(int value);
+    QString getUsrId() const;
+    void setUsrId(const QString &value);
 
     QString getName() const;
     void setName(const QString &value);
@@ -28,7 +27,7 @@ public:
 private:
 
     int fundamentalId;
-    int usrId;
+    QString usrId;
     QString name;
     QString information;
     QString infoContent;

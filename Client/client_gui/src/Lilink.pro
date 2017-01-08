@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     usrinfo.cpp \
     changemyinfo.cpp \
     database.cpp \
-    maninfo.cpp
+    maninfo.cpp \
+    addnewfriend.cpp
 
 HEADERS  += mainwindow.h \
     login.h \
@@ -28,12 +29,13 @@ HEADERS  += mainwindow.h \
     usrinfo.h \
     changemyinfo.h \
     database.h \
-    lilink.h
+    lilink.h \
+    addnewfriend.h
 
 FORMS    += mainwindow.ui \
     login.ui \
     usrinfo.ui \
-    changemyinfo.ui
+    changemyinfo.ui \
+    addnewfriend.ui
 
-RESOURCES += \
-    resource.qrc
+RESOURCES +=

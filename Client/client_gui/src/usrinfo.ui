@@ -15,9 +15,23 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="Title">
+    <widget class="QLabel" name="Usrinfo">
      <property name="text">
       <string>Usrinfo.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="Information">
+     <property name="text">
+      <string>Information</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>

@@ -1,7 +1,7 @@
 #include "maninfo.h"
 
 
-ManInfo::ManInfo(int newFundamentalId, int newUsrId, QString newName, QString newInformation, QString newInfoContent)
+ManInfo::ManInfo(int newFundamentalId, QString newUsrId, QString newName, QString newInformation, QString newInfoContent)
 {
     fundamentalId = newFundamentalId;
     usrId = newUsrId;
@@ -20,17 +20,12 @@ int ManInfo::getFundamentalId() const
     return fundamentalId;
 }
 
-void ManInfo::setFundamentalId(int value)
-{
-    fundamentalId = value;
-}
-
-int ManInfo::getUsrId() const
+QString ManInfo::getUsrId() const
 {
     return usrId;
 }
 
-void ManInfo::setUsrId(int value)
+void ManInfo::setUsrId(const QString &value)
 {
     usrId = value;
 }

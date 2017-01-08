@@ -16,11 +16,9 @@ UsrInfo::~UsrInfo()
 void UsrInfo::ShowInfo(ManInfo *showMan)
 {
     thisMan = showMan;
-    ui->Title->setText(QString("%1").arg(thisMan->getUsrId()));
-
+    ui->Usrinfo->setText(thisMan->getName());
+    ui->Information->setText(thisMan->getInformation());
     ui->showUsrInfo->clear();
-    ui->showUsrInfo->append(QString("Name: ") + thisMan->getName());
-    ui->showUsrInfo->append(QString("Information: ") + thisMan->getInformation());
     ui->showUsrInfo->append(thisMan->getInfoContent());
 }
 

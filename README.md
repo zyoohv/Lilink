@@ -1,5 +1,10 @@
 # What's lilink?
 
+<img src="./img/1.png" alt="" style="height: 200px; float:left;">
+<img src="./img/2.png" alt="" style="height: 200px; float:left;">
+<img src="./img/3.png" alt="" style="height: 200px; float:left;">
+<img src="./img/4.png" alt="" style="height: 200px;">
+
 You are in trouble to distribute your phone number after you change one?
 
 You can't make sure if your friends' information is out of date?
@@ -32,4 +37,6 @@ If you use smart phone, you can also import all your friends' phone number, qq n
 
 # What we Need now?
 
-1.  More information reference `wiki` please.
+More information reference `wiki` please.
+
+working log: [log.md](./log.md)

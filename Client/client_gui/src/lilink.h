@@ -11,5 +11,6 @@
 #include <QJsonObject>
 #include <QString>
 #include <QObject>
+#include <QUuid>
 
 #endif // LILINK_H

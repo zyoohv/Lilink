@@ -17,6 +17,7 @@
 
 #include "lilink.h"
 #include "maninfo.h"
+#include "database.h"
 
 namespace Ui {
 class ChangeMyInfo;
@@ -32,6 +33,13 @@ public:
     ~ChangeMyInfo();
 
     void InitChangeMan(ManInfo *changeMan);
+
+private slots:
+    void on_pushButton_clicked();
+
+    void on_cancelButton_clicked();
+
+    void on_saveButton_clicked();
 
 private:
     Ui::ChangeMyInfo *ui;

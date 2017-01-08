@@ -6,9 +6,10 @@ INPUT(
 ./debug\changemyinfo.o
 ./debug\database.o
 ./debug\maninfo.o
-./debug\qrc_resource.o
+./debug\addnewfriend.o
 ./debug\moc_mainwindow.o
 ./debug\moc_login.o
 ./debug\moc_usrinfo.o
 ./debug\moc_changemyinfo.o
+./debug\moc_addnewfriend.o
 );
